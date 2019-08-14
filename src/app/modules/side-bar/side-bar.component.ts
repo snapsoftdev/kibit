@@ -67,8 +67,8 @@ export class SideBarComponent implements OnInit, OnChanges {
     this.onSaveChart.emit();
   }
 
-  selectType(type: ChartType) {
-    this.typeSelected.emit(type);
+  selectType(type: string) {
+    this.typeSelected.emit(ChartType[type]);
   }
 
   onItemSelect(item: any) {
