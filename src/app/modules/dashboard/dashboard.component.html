@@ -1,0 +1,80 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-primary fixed-top">
+  <a class="navbar-brand" href="#">Dashboard</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+
+      <ng-template #popContent>
+        <app-datepicker-range (newIntervalSelected)="onDateSelect($event)"
+                              [fromDateInput]="from"
+                              [toDateInput]="to"
+        ></app-datepicker-range>
+      </ng-template>
+
+      <a class="nav-link"
+         href="#"
+         [ngbPopover]="popContent"
+         [autoClose]="false">{{getDatePickerString()}}</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="main-content container">
+  <div class="row">
+    <div class="col-sm-3">
+      <app-side-bar [sensorList]="sensorList"
+                    [selectedChart]="selectedChart"
+                    [canAddChart]="chartList.length < 4"
+                    (itemSelected)="onSensorSelected($event)"
+                    (itemDeselected)="onSensorDeselected($event)"
+                    (typeSelected)="onTypeSelected($event)"
+                    (onCreateChart)="onCreateChart()"
+                    (onColorSelected)="onColorSelected($event)"
+                    (onSaveChart)="onSaveChart()"
+                    (onDeleteChart)="onDeleteChart()"
+      ></app-side-bar>
+    </div>
+
+    <div class="col-sm-9 container">
+      <div class="row container">
+        <div *ngIf="chartList.length > 0"
+             [class.col-sm-12]="chartList.length == 1"
+             [class.col-sm-6]="chartList.length > 1"
+             class="p-1"
+        >
+          <app-chart-card [chartViewModel]="chartList[0]"
+                          [sensorData]="sensorData"
+                          (chartSelected)="onChartSelected($event)"
+          ></app-chart-card>
+        </div>
+
+        <div *ngIf="chartList.length > 1"
+             class="col-sm-6 p-1">
+          <app-chart-card [chartViewModel]="chartList[1]"
+                          [sensorData]="sensorData"
+                          (chartSelected)="onChartSelected($event)"
+          ></app-chart-card>
+        </div>
+      </div>
+
+      <div *ngIf="chartList.length > 2"
+           class="row container">
+        <div [class.col-sm-12]="chartList.length == 3"
+             [class.col-sm-6]="chartList.length > 3"
+             class="p-1">
+          <app-chart-card [chartViewModel]="chartList[2]"
+                          [sensorData]="sensorData"
+                          (chartSelected)="onChartSelected($event)"
+          ></app-chart-card>
+        </div>
+
+        <div *ngIf="chartList.length > 3"
+             class="col-sm-6 p-1">
+          <app-chart-card [chartViewModel]="chartList[3]"
+                          [sensorData]="sensorData"
+                          (chartSelected)="onChartSelected($event)"
+          ></app-chart-card>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
